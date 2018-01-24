@@ -4,7 +4,7 @@ var app = express();
 app.set('port', (process.env.PORT || 8080))
 app.use(express.static(__dirname + '/public'))
 
-app.get('/', function(request, response) {
+app.get(['/','/node'], function(request, response) {
   const my_var = process.env.MY_VAR;
   const my_secret = process.env.MY_SECRET_VAR;
   const pod_name = process.env.POD_NAME;
