@@ -6,7 +6,7 @@ metadata:
   labels:
     run: hello-java
     env: prod
-    group: hello-java
+    group: hello-app
 spec:
   #type: ClusterIP
   type: NodePort
@@ -49,15 +49,15 @@ spec:
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080
-#        livenessProbe:
-#          # an http probe
-#          httpGet:
-#            path: /management/dasdas
-#            port: 8889
+        readinessProbe:
+          # an http probe
+          httpGet:
+            path: /java/
+            port: 8080
 #          # length of time to wait for a pod to initialize
 #          # after pod startup, before applying health checking
-#          initialDelaySeconds: 30
-#          timeoutSeconds: 1
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
         env:
           - name: MY_VAR
             valueFrom: 
@@ -73,4 +73,6 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.name
+          - name: SERVER_CONTEXT_PATH
+            value: "/java"
 
