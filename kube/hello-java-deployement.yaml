@@ -44,9 +44,8 @@ spec:
     spec:
       containers:
       - name: hello-java
-        #image: maximede/hello-java:0.1.1
-        image: us.gcr.io/test-kubernetes-maximede/hello-java:0.1.1
-        imagePullPolicy: IfNotPresent
+        image: gcr.io/test-kubernetes-maximede/hello-java:0.1.2
+        imagePullPolicy: Always
         ports:
           - containerPort: 8080
         readinessProbe:

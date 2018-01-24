@@ -17,7 +17,7 @@ public class Application {
     @Value("${POD_NAME:}")
     private String podName;
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String home() {
         return "<html><body>Hello Java! <br/>\nPod name is "+podName+"\n<br/>Env Variable is "+myVariable+ " <br/>\nsecret is "+mySecretVariable;
     }

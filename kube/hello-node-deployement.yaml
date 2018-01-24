@@ -42,7 +42,7 @@ spec:
       containers:
       - name: hello-node
         #image: hello-node:0.0.2
-        image: us.gcr.io/test-kubernetes-maximede/hello-node:0.0.2
+        image: gcr.io/test-kubernetes-maximede/hello-node:0.0.2
         imagePullPolicy: IfNotPresent
         ports:
           - containerPort: 8080
