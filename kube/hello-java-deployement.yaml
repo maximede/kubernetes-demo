@@ -1,0 +1,76 @@
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-java
+  labels:
+    run: hello-java
+    env: prod
+    group: hello-java
+spec:
+  #type: ClusterIP
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+    name: http
+    protocol: TCP
+  selector:
+    run: hello-java
+    env: prod
+
+
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: hello-java
+  labels:
+    env: prod
+    group: hello-app
+    run: hello-java
+spec: 
+  selector:
+    matchLabels:
+      run: hello-java
+      env: prod
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: hello-java
+        env: prod
+    spec:
+      containers:
+      - name: hello-java
+        #image: maximede/hello-java:0.1.1
+        image: us.gcr.io/test-kubernetes-maximede/hello-java:0.1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 8080
+#        livenessProbe:
+#          # an http probe
+#          httpGet:
+#            path: /management/dasdas
+#            port: 8889
+#          # length of time to wait for a pod to initialize
+#          # after pod startup, before applying health checking
+#          initialDelaySeconds: 30
+#          timeoutSeconds: 1
+        env:
+          - name: MY_VAR
+            valueFrom: 
+              configMapKeyRef:
+                name : my-config
+                key : MY_VAR
+          - name: MY_SECRET_VAR
+            valueFrom:
+              secretKeyRef:
+                name: my-secret-config
+                key: MY_SECRET_VAR
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+

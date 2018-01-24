@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: my-nginx-ingress-app
+  annotations:
+    #ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.global-static-ip-name: kubernetes-ingress
+    ingress.kubernetes.io/ssl-redirect: 'true'
+spec:
+  tls:
+  - hosts:
+    - minikube.uw.deravet.eu
+    secretName: minikube
+  rules:
+  - host: minikube.uw.deravet.eu
+    http:
+      paths:
+      - path: /node
+        backend:
+          serviceName: hello-node
+          servicePort: 80
+      - path: /java
+        backend:
+          serviceName: hello-java
+          servicePort: 80
